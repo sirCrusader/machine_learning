@@ -15,11 +15,15 @@ p = zeros(m, 1);
 %               You should set p to a vector of 0's and 1's
 %
 
-
-
-
-
-
+for index = 1:m
+  sum_result = sum(theta'.*X(index, :));
+  h = sigmoid(sum_result);
+  if (h >= 0.5)
+    p(index) = 1;
+  else
+    p(index) = 0;
+  endif
+end
 
 % =========================================================================
 
