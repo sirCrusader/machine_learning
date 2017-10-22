@@ -24,7 +24,8 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 
 % Setup some useful variables
 m = size(X, 1);
-
+theta1_size = size(Theta1);
+theta2_size = size(Theta2);
          
 % You need to return the following variables correctly 
 J = 0;
@@ -77,6 +78,20 @@ for i=1:m;
 end
 
 J = (1 / m) * J;
+
+theta1_reg = 0;
+theta2_reg = 0;
+
+for i=1:theta1_size(1)
+  theta1_reg = theta1_reg + sum(Theta1(i, 2:theta1_size(2)) .^ 2);
+end
+
+for i=1:theta2_size(1)
+  theta2_reg = theta2_reg + sum(Theta2(i, 2:theta2_size(2)) .^ 2);
+end
+
+reg_sum = ((theta1_reg + theta2_reg) * lambda) / (2 * m);
+J = J +reg_sum;
 
 % -------------------------------------------------------------
 
