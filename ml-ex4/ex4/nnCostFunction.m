@@ -24,6 +24,7 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 
 % Setup some useful variables
 m = size(X, 1);
+
          
 % You need to return the following variables correctly 
 J = 0;
@@ -61,24 +62,21 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
+num_labels_size = size(Theta2_grad, 1);
 
+first_x_layer = [ones(m, 1) X];
+first_layer_comp = sigmoid(first_x_layer * Theta1');
+first_layer_comp = [ones(m, 1) first_layer_comp];
 
+for i=1:m;
+  y_val = zeros(1, num_labels_size);
+  y_val(y(i)) = 1;
+  
+  z = sigmoid(first_layer_comp(i,:) * Theta2');
+  J = J + sum(-1 .* (y_val .* log(z)) - (1 - y_val) .* log(1 - z));
+end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+J = (1 / m) * J;
 
 % -------------------------------------------------------------
 
